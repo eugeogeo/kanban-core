@@ -1,8 +1,8 @@
 import { Box, Skeleton, Stack } from "@mui/material";
 import Collapse from "@mui/material/Collapse";
-import type { Card } from "../@types/data";
-import type { ColumnBoard } from "../@types/enum";
-import { getDescriptionColumnBoard } from "../utils/enum";
+import type { Card } from "../../@types/data";
+import type { ColumnBoard } from "../../@types/enum";
+import { getDescriptionColumnBoard } from "../../utils/enum";
 import CardBoard from "./Card";
 import HeaderColumn from "./HeaderColumn";
 

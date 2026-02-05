@@ -1,5 +1,5 @@
 import { Box, Stack, Typography, useTheme } from "@mui/material";
-import type { Card as Cardtype } from "../@types/data";
+import type { Card as Cardtype } from "../../@types/data";
 
 type CardProps = {
   data: Cardtype;
