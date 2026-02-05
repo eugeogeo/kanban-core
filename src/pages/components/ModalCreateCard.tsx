@@ -1,33 +1,39 @@
 import { Stack, TextField } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
+import type { Card } from "../../@types/data"; // Importe o tipo Card
 import Modal from "../../componentes/Modal";
 
 type ModalCreateCardProps = {
   isOpen: boolean;
   onClose: () => void;
+  onAddCard: (card: Card) => void;
 };
 
 type Inputs = {
   title: string;
-  // column: ColumnBoard;
 };
 
-const ModalCreateCard = (data: ModalCreateCardProps) => {
-  const { isOpen, onClose } = data;
-
+const ModalCreateCard = ({ isOpen, onClose, onAddCard }: ModalCreateCardProps) => {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<Inputs>();
 
   const handleClose = () => {
+    reset();
     onClose();
   };
 
-  const onSubmit = () => {
-    // Lógica para criar o card
-    onClose();
+  const onSubmit = (data: Inputs) => {
+    const newCard: Card = {
+      id: crypto.randomUUID(),
+      title: data.title,
+    };
+
+    onAddCard(newCard);
+    handleClose();
   };
 
   return (

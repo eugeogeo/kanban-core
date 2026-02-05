@@ -6,6 +6,8 @@ import { ColumnBoard } from "../@types/enum";
 import ColumnsBoard from "../componentes/board/ColumnsBoard";
 import ModalCreateCard from "./components/ModalCreateCard";
 
+const STORAGE_KEY = "KANBAN_CARDS_CACHE";
+
 const Board = () => {
   const raias = [
     ColumnBoard.PARA_DESENVOLVER,
@@ -27,7 +29,6 @@ const Board = () => {
 
   const [isLoading, _setIsLoading] = useState(false);
   const [cards, setCards] = useState<Card[]>([]);
-
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   const toggleCollapse = (columnName: ColumnBoard) => {
@@ -39,14 +40,27 @@ const Board = () => {
 
   const openColumnsCount = Object.values(collapsedColumns).filter((v) => !v).length || 1;
 
-  // TODO: implementar get data
   const getData = useCallback(() => {
-    setCards([
-      { id: "1", title: "Card 1" },
-      { id: "2", title: "Card 2" },
-      { id: "3", title: "Card 3" },
-    ]);
+    const cachedData = localStorage.getItem(STORAGE_KEY);
+
+    if (cachedData) {
+      try {
+        setCards(JSON.parse(cachedData));
+      } catch (e) {
+        console.error("Erro ao ler cache", e);
+        setCards([]);
+      }
+    }
   }, []);
+
+  const handleAddCard = (newCard: Card) => {
+    setCards((prevCards) => {
+      const updatedCards = [...prevCards, newCard];
+
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedCards));
+      return updatedCards;
+    });
+  };
 
   useEffect(() => {
     getData();
@@ -82,7 +96,7 @@ const Board = () => {
         </Box>
       </Box>
 
-      <ModalCreateCard isOpen={isOpenModal} onClose={() => setIsOpenModal(false)} />
+      <ModalCreateCard isOpen={isOpenModal} onClose={() => setIsOpenModal(false)} onAddCard={handleAddCard} />
     </>
   );
 };
