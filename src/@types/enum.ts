@@ -1,0 +1,7 @@
+export enum ColumnBoard {
+  PARA_DESENVOLVER,
+  DESENVOLVENDO,
+  AGUARDANDO_TESTS,
+  TESTANDO,
+  CONCLUIDOS,
+}
