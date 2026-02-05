@@ -66,6 +66,10 @@ const Board = () => {
     getData();
   }, [getData]);
 
+  const getCardByColumn = (column: ColumnBoard) => {
+    return cards.filter((card) => card.column === column);
+  };
+
   return (
     <>
       <Box pt={2} sx={{ px: 3, minWidth: "85vw", overflowAnchor: "none" }}>
@@ -85,7 +89,7 @@ const Board = () => {
             <ColumnsBoard
               key={raia}
               raia={raia}
-              cards={cards}
+              cards={getCardByColumn(raia)}
               columnsLength={raias.length}
               handleCollapse={() => toggleCollapse(raia)}
               isLoading={isLoading}

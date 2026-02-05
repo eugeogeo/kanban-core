@@ -1,6 +1,7 @@
 import { Stack, TextField } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import type { Card } from "../../@types/data"; // Importe o tipo Card
+import { ColumnBoard } from "../../@types/enum";
 import Modal from "../../componentes/Modal";
 
 type ModalCreateCardProps = {
@@ -30,6 +31,7 @@ const ModalCreateCard = ({ isOpen, onClose, onAddCard }: ModalCreateCardProps) =
     const newCard: Card = {
       id: crypto.randomUUID(),
       title: data.title,
+      column: ColumnBoard.PARA_DESENVOLVER,
     };
 
     onAddCard(newCard);
